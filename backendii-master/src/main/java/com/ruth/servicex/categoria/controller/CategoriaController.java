@@ -37,11 +37,12 @@ public class CategoriaController {
         return new ResponseEntity<>(categoriaService.salvarCategoria(categoria), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("categoriaId")
+    @DeleteMapping("/{categoriaId}")
     public ResponseEntity<Void> excluirCategoria(@PathVariable("categoriaId") Integer categoriaId) {
         categoriaService.deletarCategoria(categoriaId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
     @PutMapping("{categoriaId}")
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Integer categoriaId,
                                                         @RequestBody Categoria categoria) {
@@ -50,7 +51,8 @@ public class CategoriaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND)    ;
         }
 
+        categoria.setIdCategoria(categoriaId);
+
+        return new ResponseEntity<>(categoriaService.salvarCategoria(categoria), HttpStatus.OK);
     }
-
-
 }
