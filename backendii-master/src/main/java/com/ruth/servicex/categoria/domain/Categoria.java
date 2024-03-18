@@ -1,5 +1,6 @@
 package com.ruth.servicex.categoria.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ruth.servicex.servico.domain.Servico;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class Categoria {
 
     @Column(name = "NOME_CATEGORIA")
     private String nomeCategoria;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Servico> Servicos;
 }

@@ -29,8 +29,6 @@ public class CategoriaService {
     }
 
     public void deletarCategoria(Integer id) {
-        Categoria categoria = procurarCategoria(id).get();
-
-        categoriaRepository.delete(categoria);
+        categoriaRepository.deleteById(id);
     }
 }

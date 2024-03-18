@@ -2,6 +2,7 @@ package com.ruth.servicex.servico.domain;
 
 import com.ruth.servicex.categoria.domain.Categoria;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,12 @@ public class Servico {
             strategy = GenerationType.IDENTITY
     )
     @EqualsAndHashCode.Include
-    private Integer id;
+    private Integer idServico;
 
     @Column(
             name = "nome"
     )
-    private String nome;
+    private String nomeServico;
 
     @Column(
             name = "valor"
