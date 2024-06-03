@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(
-        name = "servicos"
+        name = "SERVICO"
 )
 @Data
 @EqualsAndHashCode(

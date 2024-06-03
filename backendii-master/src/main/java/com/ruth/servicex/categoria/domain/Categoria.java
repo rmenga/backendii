@@ -5,11 +5,13 @@ import com.ruth.servicex.servico.domain.Servico;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(
         name= "CATEGORIA"
 )
@@ -32,4 +34,9 @@ public class Categoria {
     @JsonIgnore
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Servico> Servicos;
+
+    public Categoria(Integer idCategoria, String nomeCategoria) {
+        this.idCategoria = idCategoria;
+        this.nomeCategoria = nomeCategoria;
+    }
 }

@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,18 +21,18 @@ public class PagamentoBoleto extends Pagamento {
 
     @Column(name = "DATA_VENCIMENTO")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date dataVencimento;
+    private LocalDate dataVencimento;
     @Column(name = "DATA_PAGAMENTO")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date dataPagamento;
+    private LocalDate dataPagamento;
 
-    public PagamentoBoleto(Integer idPagamento, StatusPagamento statusPagamento, OrdemServico ordemServico, Date dataVencimento, Date dataPagamento) {
+    public PagamentoBoleto(Integer idPagamento, StatusPagamento statusPagamento, OrdemServico ordemServico, LocalDate dataVencimento, LocalDate dataPagamento) {
         super(idPagamento, statusPagamento, ordemServico);
         this.dataVencimento = dataVencimento;
         this.dataPagamento = dataPagamento;
     }
 
-    public PagamentoBoleto(Date dataVencimento, Date dataPagamento) {
+    public PagamentoBoleto(LocalDate dataVencimento, LocalDate dataPagamento) {
         this.dataVencimento = dataVencimento;
         this.dataPagamento = dataPagamento;
     }

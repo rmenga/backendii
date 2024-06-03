@@ -1,42 +1,51 @@
 package com.ruth.servicex.pagamento.domain;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ruth.servicex.ordemServico.domain.OrdemServico;
 import jakarta.persistence.*;
-
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "PAGAMENTO")
-public class Pagamento {
+@Table(
+        name = "pagamento"
+)
+@Getter
+@Setter
+@EqualsAndHashCode(
+        onlyExplicitlyIncluded = true
+)
+@Inheritance(
+        strategy = InheritanceType.JOINED
+)
+@NoArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PagamentoBoleto.class, name = "pagamentoBoleto")
+})
+public abstract class Pagamento {
 
     @Id
+    @EqualsAndHashCode.Include
     private Integer idPagamento;
 
     @Column(name = "STATUS_PAGAMENTO")
-    private Integer statusPagamento;
+    private Integer statusPagamento = StatusPagamento.PENDENTE.getCod();
 
     @OneToOne
-    @JoinColumn(name = "ID_OrdemServico")
     @MapsId
+    @JoinColumn(name = "ordem_servico_id")
+    @JsonIgnore
     private OrdemServico ordemServico;
 
-    public Pagamento(Integer idPagamento, StatusPagamento statusPagamento, OrdemServico ordemServico) {
-        this.idPagamento = idPagamento;
-        this.statusPagamento = (statusPagamento == null) ? null: statusPagamento.getCod();
+    public Pagamento(Integer id, StatusPagamento statusPagamento, OrdemServico ordemServico) {
+        this.idPagamento = id;
+        this.statusPagamento = (statusPagamento == null) ? null : statusPagamento.getCod();
         this.ordemServico = ordemServico;
-    }
-
-    public Pagamento() {
-
-    }
-
-    public Integer getIdPagamento() {
-        return idPagamento;
-    }
-
-    public void setIdPagamento(Integer idPagamento) {
-        this.idPagamento = idPagamento;
     }
 
     public StatusPagamento getStatusPagamento() {
@@ -45,26 +54,5 @@ public class Pagamento {
 
     public void setStatusPagamento(StatusPagamento statusPagamento) {
         this.statusPagamento = statusPagamento.getCod();
-    }
-
-    public OrdemServico getOrdemServico() {
-        return ordemServico;
-    }
-
-    public void setOrdemServico(OrdemServico ordemServico) {
-        this.ordemServico = ordemServico;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pagamento pagamento = (Pagamento) o;
-        return Objects.equals(idPagamento, pagamento.idPagamento) && Objects.equals(statusPagamento, pagamento.statusPagamento) && Objects.equals(ordemServico, pagamento.ordemServico);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPagamento, statusPagamento, ordemServico);
     }
 }

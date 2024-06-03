@@ -2,6 +2,7 @@ package com.ruth.servicex.servico.service;
 
 import com.ruth.servicex.servico.domain.Servico;
 import com.ruth.servicex.servico.repository.ServicoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +24,12 @@ public class ServicoService {
         return servicoRepository.findById(id);
     }
 
+    @Transactional
     public Servico salvarServico(Servico servico) {
         return servicoRepository.save(servico);
     }
 
+    @Transactional
     public void deletarServico(Integer id) {
         servicoRepository.deleteById(id);
     }
